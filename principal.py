@@ -1,7 +1,8 @@
 try:
-    arquivo_contatos = open('dados/contatos.csv', encoding='latin_1')
-
-    for i in arquivo_contatos:
-        print(i, end='')
-finally:
-    arquivo_contatos.close()
+    with open('dados/contatos.csv', encoding='latin_1') as file:
+        for i in file:
+            print(i, end='')
+except FileNotFoundError:
+    print('Arquivo não encontrado')
+except PermissionError:
+    print('Sem permissão')
