@@ -1,4 +1,4 @@
-import csv, pickle
+import csv, pickle, json
 from contato import Contato
 
 
@@ -30,3 +30,24 @@ def pickle_para_contatos(caminho):
         contatos = pickle.load(file)
 
     return contatos
+
+
+def contatos_para_json(contatos, caminho):
+    with open(caminho, mode='w') as file:
+        json.dump(contatos, file, default=_contato_para_json)
+
+
+def _contato_para_json(contato):
+    return contato.__dict__
+
+
+def json_para_contatos(caminho):
+    with open(caminho) as file:
+        contatos = []
+
+        contatos_json = json.load(file)
+
+        for i in contatos_json:
+            contato = Contato(i['id'], i['nome'], i['email'])
+            contatos.append(contato)
+        return contatos
